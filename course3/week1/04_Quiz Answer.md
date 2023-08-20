@@ -77,9 +77,9 @@ Which of the following best answers why it is important to identify optimizing a
 ---
 ### Question 4
 With 10,000,000 data points, what is the best option for train/dev/test splits?
-- [ ] train - 95%, dev - 2.5%, test - 2.5%
+- [x] train - 95%, dev - 2.5%, test - 2.5%
 - [ ] train - 33.3%, dev - 33.3%, test - 33.3%
-- [x] train - 60%, dev - 30%, test - 10%
+- [ ] train - 60%, dev - 30%, test - 10%
 - [ ] train - 60%, dev - 10%, test - 30%
 
 ---
@@ -92,8 +92,8 @@ Is the following statement true or false?
 
 "You should not add the citizens' data to the training set, because if the training distribution is different from the dev and test sets, then this will not allow the model to perform well on the test set."
 
-- [x] True
-- [ ] False
+- [ ] True
+- [x] False
 
 Sometimes we'll need to train the model on the data that is available, and its distribution may not be the same as the data that will occur in production. Also, adding training data that differs from the dev set may still help the model improve performance on the dev set. What matters is that the dev and test set have the same distribution.
 
@@ -138,10 +138,10 @@ If your goal is to have “human-level performance” be a proxy (or estimate) f
 ### Question 9
 Which of the below shows the optimal order of accuracy from worst to best?
 
-- [ ] Human-level performance $\to$ the learning algorithm's performance $\to$ Bayes error
+- [x] Human-level performance $\to$ the learning algorithm's performance $\to$ Bayes error
 - [ ] Human-level performance $\to$ Bayes error $\to$ the learning algorithm's performance 
 - [ ] The learning algorithm's performance $\to$ Bayes error $\to$ human-level performance 
-- [x] The learning algorithm's performance $\to$ human-level performance $\to$  Bayes error
+- [ ] The learning algorithm's performance $\to$ human-level performance $\to$  Bayes error
 
 No. HLP may be better than your algorithm's performance but it cannot be better than BE.
 
