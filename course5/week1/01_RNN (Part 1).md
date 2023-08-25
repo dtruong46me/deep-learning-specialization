@@ -1,4 +1,4 @@
-**Example of Sequence data**
+## Example of Sequence data
 
 ![](img/1.png)
 
@@ -74,7 +74,7 @@ flowchart TD;
     A --- X_t
 ```
 
-### Forward Propagation
+## Forward Propagation
 
 ![](img/3.png)
 
@@ -90,10 +90,22 @@ flowchart TD;
 
 - $\hat{y}^{<t>} = g(W_{ya} \times a^{<t>} + b_y) $
 
-### Back Propagation
+## Back Propagation
 
 **Loss function**
 
 $L^{<t>}(\hat{y}^{<t>}, y^{<t>}) = -y^{<t>} \times log \hat{y}^{<t>} - (1-y^{<t>}) \times log(1-\hat{y}^{<t>})$
 
 $\to L^{<t>}(\hat{y}, y) = \sum_{t=1}^{T_y} L^{<t>}(\hat{y}^{<t>}, y^{<t>}) $
+
+**Backpropagation through time**
+
+$\frac{\partial{L^{(T)}}}{\partial{W}} = \sum_{t=1}^T \frac{\partial{L^{(T)}}}{\partial{W}} $
+
+**Commonly used activation functions**
+
+|Activation|Formula|
+|:-:|:-:|
+|Sigmoid|$\frac{1}{1+e^{-z}}$|
+|Tanh|$\frac{e^z-e^{-z}}{e^z+e^{-z}} $|
+|RELU|$max(0,z)$|
