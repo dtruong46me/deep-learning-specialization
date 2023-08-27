@@ -47,7 +47,7 @@ graph BT
 
 ## Properties of Word Embeddings
 
-$sim(A,B) = cos{\theta} = \frac{A.B}{||A||||B||} $
+$similarity(A,B) = cos{\theta} = \frac{A.B}{||A||||B||} $
 
 ## Embedding Matrix
 

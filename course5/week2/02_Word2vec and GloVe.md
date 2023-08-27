@@ -31,11 +31,9 @@ flowchart LR;
     o_c --> E --> e_c --> softmax --> y_pred
 ```
 
-
-
 Problem with softmax classification
 
-$p(t|c) = \frac{e^{\theta_j^T e_c}}{\sum_{j=1}^10,000 e^{\theta_j^T e_c}} $
+$p(t|c) = \frac{e^{\theta_j^T e_c}}{\sum_{j=1}^{10,000} e^{\theta_j^T e_c}} $
 
 Where $\theta_t$ = parameter associated with output t
 
@@ -43,6 +41,43 @@ How to sample the context **$e_c$**
 
 - the, of, a, and, to,...
 - orange, apple, ...
+
+### Skip Gram and CBOW
+
+```mermaid
+flowchart TD;
+    subgraph CBOW
+        A["V(t-2)"] --> B[O]
+        C["V(t-1)"] --> B
+        D["V(t+1)"] --> B
+        E["V(t+2)"] --> B
+        B --> G["V(t)"]
+    end
+
+    subgraph SkipGram
+        J["V(t)"] --> K[O]
+        K --> AL["V(t-2)"]
+        K --> CL["V(t-1)"]
+        K --> DL["V(t+1)"]
+        K --> EL["V(t+2)"]
+    end
+```
+
+Example for Skip Gram
+
+```mermaid
+flowchart TD
+    A[beautiful]
+    A --> Vietnam
+    A --> is
+    A --> a
+    A ~~~ ...
+    A --> country
+```
+
+### One hot Vector
+- One-hot Vector: One element of vector is 1, remaining elements are 0
+- Leng of One-hot Vector equals the number of words in corpus
 
 ## Negative Sampling
 
@@ -57,7 +92,7 @@ $X_{ij} \to$ times i appears in context of j
 
 Minimize $\sum_{i=1}^{10,000} \sum_{j=1}{10,000} f(X_{ij})(\theta_i^T e_j - logX_{ij})^2 $
 
-$f(X_{ij}): weighting term$
+$f(X_{ij}): weighting-term$
 
 $f(X_{ij}) = 0$ at $X_{ij}=0$
 
