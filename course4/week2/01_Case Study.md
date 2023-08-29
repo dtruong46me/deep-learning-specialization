@@ -1,5 +1,7 @@
 ## Classic Networks
 
+![Alt text](img/pic1.png)
+
 ### LeNet - 5
 
 ![Alt text](img/Screenshot-from-2021-03-18-12-47-59.webp)
@@ -67,3 +69,69 @@ Hình 3. Tổng cộng có 12 đầu ra từ ResNet-152 và VGG-19 đã được
 The 2D Average Pooling : sử dụng với kích thước (2,2)
 - The Flatten
 - Fully Connected (Dense) : sử dụng softmax activation
+
+## Motivation for Inception Network
+
+```mermaid
+graph LR;
+    subgraph 28x28x192
+        E[Input\nImage]
+    end
+
+    subgraph 28x28x256
+        A[28x28x64]
+        B[28x28x128]
+        C[28x28x32]
+        D[28x28x32]
+    end
+
+    E -- 1x1 --> A
+    E -- 3x3 --> B
+    E -- 5x5 --> C
+    E -- MaxPooling --> D
+```
+
+**The problem of computational cost**
+
+```mermaid
+graph LR;
+    subgraph 28x28x192
+        E[[InputLayer]]
+    end
+
+    subgraph 28x28x32
+        F[[CONV]]
+    end
+
+    E -- "5x5 (32 filters)" --> F
+```
+
+$\to$ 32 filters
+
+28x28x32x5x5x192 $\to$ 120M
+
+**Using 1x1 Convolution**
+
+```mermaid
+graph LR;
+    subgraph 28x28x192
+        E[[InputLayer]]
+    end
+
+    subgraph 28x28x16
+        F[[CONV]]
+    end
+
+    subgraph 28x28x32
+        G[[CONV]]
+    end
+
+    E -- "1x1x192" --> F
+    F -- "5x5x16" --> G
+```
+
+$\to$ 28x28x16x192 = 2.4M
+
+$\to$ 28x28x32x5x5x16 = 10M
+
+$\to$ 12.4M << 120M (above)
