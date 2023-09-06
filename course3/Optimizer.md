@@ -2,8 +2,8 @@
 ```mermaid
 flowchart LR;
     GD --> SGD --> Momentum
-    SGD --> Adagrad
-    Adagrad --> RMSProp
+    SGD --> AdaGrad
+    AdaGrad --> RMSProp
     Momentum --> Adam
     RMSProp --> Adam
 ```
@@ -27,6 +27,37 @@ flowchart LR;
 > **Stochastic Dradient Descent** is a variantion of **Gradient Descent**. Instead of afger each `epoch` we will update the weight once, in SGD, in each `epoch` with `N` data points we will update the weight `N` times.
 
 ![Alt text](imgs/77d900e2-0305-47cd-92e6-48604df4170c.png)
+> - Looking at the two pictures above, we see that SGD has a pretty zigzag path, not as smooth as GD. It's easy to understand because 1 data point cannot represent the whole data. 
+> - Question why should use SGD instead of GD even though its path is quite zigzag? Here, GD has a limitation for large databases (several million data), it becomes cumbersome to calculate the derivative over the entire data through each loop. 
+> - Besides, GD is not suitable for online learning. Online learning is when data is continuously updated (for example, adding registered users), then each time we add data we have to recalculate the derivative on the entire data.
+
+- The SGD formula is similar to GD but is performed on each data point.
+
+- Advantage: The algorithm can handle large database that **Gradient Descent** cannot. This optimization algorithm is still commonly used today
+- Disadvantage: This algorithm has not yet solved 2 major disadvantages of **Gradient Descent**:
+    - Learning rate
+    - Original data point
+
+### Momentum
+![](imgs/d9fc7167-5a1e-442c-b9c2-c397f16caf6c.png)
+> - To explain the Gradient with Momentum, we should first look at it from a physics perspective: 
+>   - As in Figure b above, if we drop 2 marbles at 2 different points A and B, the ball hit by A will slide to point C and the ball will slide to point C. Ball B will slide to point D, but we do not want ball B to stop at point D (local minimum) but will continue to roll to point C (global minimum). 
+>   - To do that, we have to give marble B an initial speed large enough so that it can pass from point E to point C. Based on this idea, people build Momentum algorithm (ie, according to momentum)
+
+|GradDesent|Momentum|
+|:-:|:-:|
+|![](imgs/f7c18d48-71dd-4c90-b2e6-6a185e027fe9.gif)|![](imgs/08a649c1-cddd-4fe6-b6fb-89bbf721d9f1.gif)|
+> - Gradient Descent **without momentum** will convergent after 5 iterations but not the global minimum.
+> - Gradient Descent **with momentum** takes many iterations but the solution approaches the global minimum
+
+- Formula: $\theta_t = \theta_{t-1} - (\gamma v_t + \alpha \nabla L(\theta)) $
+> Where:
+> - $\gamma$: parameter, default 0.9
+> - $\alpha$: learning rate
+> - $v_t = \mu v_{t-1} + \nabla L(\theta) $, where $\mu=0.7$ is default
+
+- Advantage: The optimization algorithm solves the problem: **Gradient Descent** does not reach the global minimum
+- Disadvantage: Although momentum helps the marble climb uphill to reach the destination, it still takes a lot of time to oscillate back and forth before stopping completely, ***this is explained because the marble has momentum***
 
 ### Adam
 - Adam = Momentum + RMSProp
@@ -40,7 +71,6 @@ flowchart LR;
     - $\hat{m}_t = m_t / (1-\beta_1^t)$
     - $\hat{m}_t = v_t / (1-\beta_2^t)$
     - $\theta_t = \theta_{t-1} - \alpha \times \hat{m_t}/\sqrt{\hat{v_t} + \epsilon} $
-    ___
     > - Default hyperparameter:
     >   - $\beta_1=0.9$
     >   - $\beta_2=0.999$
@@ -95,9 +125,40 @@ flowchart LR;
 - The most optimizer used until now is **Adam**. We can see that in the process, the **Adam Optimizer** has good performance, close to global minimum than other method.
 
 ### Adadelta
+> **AdaDelta** is an algorithm based on **AdaGrad** that tackles the disadvantages mentioned before. Instead of accummulating the gradient in $G_t$ over all time from t=1 to T, **AdaDelta** takes an exponential weighted average of the following form:
+$G_t = \rho G_{t-1} + (1-\rho)g_t^2 $
 
+- Typical choices for the decay rate $\rho$ are 0.95 or 0.90, which are the default choides for AdaDelta optimizer in Tensorflow and PyTorch, respectively
 
-### Adagrad
+- Additionally, AdaDelta are the squared updates are accumulated with a running average with parameter $\rho$:
+    - $E[\Delta x^2]_t = \rho E[\Delta x^2]_{t-1} + (1-\rho) \Delta x_t^2 $
+    - where $\Delta x_t = -(\sqrt{\Delta x_{t-1} + \epsilon}) \frac{g_t}{\sqrt{G_t}} $
+    - so the update rule in **AdaDelta** is given by: $\Delta x_{t+1} = x_t + \Delta x_t $
 
+### AdaGrad
+> AdaGrad considers the learning rate as a parameter. That is, **AdaGrad** will let learning rate change after each time t
+- Formula: $\theta_{t+1} = \theta_t - \eta \frac{1}{\sqrt{G_t+\epsilon}} \times \nabla L(\theta_t) $
+> Where:
+> - $\eta$: learning rate
+> - $\nabla L(\theta)$: gradient descent
+> - $\epsilon$: error avoidance coefficient
+> - $G_t$: sum of squares of the gradient for the parameter at the time t
+
+- Advantage: **AdaGrad** is avoiding manual learning rate adjustment, just set the default learning rate to 0.01 and the algorithm will automatically adjust.
 
 ### RMSProp
+> RMSProp solve Adagrad's decreasing learning rate problem by deviding the learning rate by the average of the squares of the gradient
+
+- Formula: 
+    - $G_t = \rho G_{t-1} + (1-\rho) g_t^2 $
+    - $\theta_{t+1} = \theta_t - \eta \frac{1}{\sqrt{G_t + \epsilon}}g_t $
+    > Where:
+    >   - $\alpha=0.001$: learning rate
+    >   - $\rho=0.9$
+    >   - $\epsilon=10^{-7}$
+    >   - $g_t = \nabla L(\theta)$: Gradient descent
+    > - $G_t$: sum of squares of the gradient for the parameter at the time t
+
+- Advantage: The most obvious advantage of RMSprop is that it solves the problem of Adagrad's gradually decreasing learning speed (the problem of gradually decreasing learning speed over time will cause training to slow down, possibly leading to freezing).
+
+- The RMSprop algorithm can only give a solution that is local minimum but not global minimum like Momentum. Therefore, people will combine both Momentum algorithms with RMSprop to create an Adam optimal algorithm.
