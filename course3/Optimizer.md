@@ -23,6 +23,11 @@ flowchart LR;
     - If the **learning rate** is too small, the convergence speed is very slow $\to$ affecting the training process
     - If the **learning rate** is too large, it will quickly reach the target. However, the algorithm does not convergent and loops around the destination because the jump is too large
 
+### SGD
+> **Stochastic Dradient Descent** is a variantion of **Gradient Descent**. Instead of afger each `epoch` we will update the weight once, in SGD, in each `epoch` with `N` data points we will update the weight `N` times.
+
+![Alt text](imgs/77d900e2-0305-47cd-92e6-48604df4170c.png)
+
 ### Adam
 - Adam = Momentum + RMSProp
 - If **Momentum** is like a ball going downhill, then **Adam** is like a heavy ball with friction, so it easily crosses the local minimum to the global minimum and when it reaches the global minimum. It does not take a long time to oscillate back and forth around the target *(dao động qua loại quanh vị trí đích)* because it has friction so it's easier to stop.
@@ -87,8 +92,7 @@ flowchart LR;
     >       - $t=80: m_t=0.055, v_t=0.093, \hat{m_t}=0.055, \hat{v_t}=1.211, \theta_{80}=3.003$
     >       - $t=81: m_t=0.050, v_t=0.093, \hat{m_t}=0.050, \hat{v_t}=1.195, \theta_{81}=2.998$
 
-### SGD
-
+- The most optimizer used until now is **Adam**. We can see that in the process, the **Adam Optimizer** has good performance, close to global minimum than other method.
 
 ### Adadelta
 
