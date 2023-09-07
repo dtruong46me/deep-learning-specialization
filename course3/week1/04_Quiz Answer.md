@@ -146,7 +146,7 @@ Which of the below shows the optimal order of accuracy from worst to best?
 No. HLP may be better than your algorithm's performance but it cannot be better than BE.
 
 ---
-Question 10
+### Question 10
 Which of the following best expresses how to evaluate the next steps in your project when your results for human-level performance, train, and dev set error are 0.1%, 2.0%, and 2.1% respectively?
 
 - [ ] Keep tuning until the train set accuracy is equal to human-level performance because it is the optimizing metric
@@ -155,6 +155,9 @@ Which of the following best expresses how to evaluate the next steps in your pro
 - [ ] Based on differences between the three levels of performance, prioritize actions to decrease bias and iterate
 
 No. Always choose the area with the biggest opportunity for improvement.
+
+**Question 10**
+
 
 ---
 ### Question 11
@@ -173,6 +176,10 @@ After working on this project for a year, you finally achieve: Human-level perfo
 - [x] Pushing to even higher accuracy will be slow because you will not be able to easily identify sources of bias
 - [ ] There is still avoidable bias
 - [x] The model has recognized emergent features that humans cannot (Chess and Go for example)
+- [x] All or almost all of the avoidable bias has been accounted for
+- [ ] This is a statistical anomaly (or must be the result of statistical noise) since it should not be possible to surpass human-level performance
+- [ ] With only 0.05% further progress to make, you should quickly able to close the remaining gap to 0%
+- [x] You are close to Bayes error and possible overfitting
 
 ---
 ### Question 13
@@ -189,7 +196,7 @@ Yes. The target has shifted so an updated metric is required.
 ### Question 14
 You’ve handily beaten your competitor, and your system is now deployed in Peacetopia and is protecting the citizens from birds! But over the last few months, a new species of bird has been slowly migrating into the area, so the performance of your system slowly degrades because your model is being tested on a new type of data. There are only 1,000 images of the new species. The city expects a better system from you within the next 3 months. Which of these should you do first?
 
-- [ ] Add the new images and split them among train/dev/test
+- [x] Add the new images and split them among train/dev/test
 - [ ] Put them into the dev set to evaluate the bias and re-tune
 - [ ] Augument your data to increase the images of the new bird
 - [ ] Add hidden layers to further refine feature development
@@ -203,4 +210,3 @@ The City Council thinks that having more Cats in the city would help scare off b
 - [x] Lowering the number of images will reduce training time and likely allow for an acceptable trade-off between iteration speed and accuracy
 - [x] This significantly impacts iteration speed
 - [ ] Reducing the model complexity will allow the use of the larger dataset but preserve accuracy
-
