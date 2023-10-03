@@ -34,12 +34,49 @@
 - Loss function:
 
 ### Landmark Detection
+- In some CV problems, you need to output some points. That is call **landmark detection**
+
+    > *Example:* Face recognition:
+    > - Corners of eyes
+    > - Corners of mouth
+    > - Corners of nose ...
 
 ### Object Detection
+- Sliding windows detection algorithm
+- Example: **Car Object Detection**
+    > - First, we train Convolutional Networks on **cropped car images** and **non-car image**
+    > - Then use it with the **sliding windows technique**
+    ![Alt text](18.png)
+
+- Sliding windows detection algorithm (SWDA):
+    - Decide a rectangle size
+    - Split input image into rectangles (picked above), can use some **stride S**
+    - For each rectangle feed the image into the Conv Net and decide if its a car or not
+    - Pick larger/smaller rectangles, repeat from 2-3
+    - Store the rectangle that contains the cars
+    - If 2 rectangle intersects, choose the rectangle with the best accuracy. *(Of course)*
 
 ### Convolutional Implement of Sliding Windows
 
+- Turn **FC Layer** into **Conv Layers** (predict image class from 4 class)
+![Alt text](19.png)
+
+- Convolution Implementation of Sliding windows
+    - Conv Net
+    ![Alt text](20.png)
+    - 16x16x3 image that need to apply Sliding Windows Algorithm
+        > The normal implementation: run this Conv Net 4 times each rectangle size will be 16x16
+
+    - The Convolution Implementation will be as follow:
+    ![Alt text](21.png)
+
+- **Weakness**: Position of rectangle won't be accurate.
+
+    ![Alt text](23.png)
+    > In red, the rectangle we want and in blue is the required car rectangle
+
 ### Bounding Box Predictions
+- YOLO (You Only Look Once)
 
 ### Intersection Over Union
 
